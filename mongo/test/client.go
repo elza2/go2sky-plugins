@@ -61,8 +61,12 @@ func main() {
 	}
 
 	ctx := context.Background()
+	middleware := mongoPlugin.Middleware(tracer)
+	/* middleware := mongoPlugin.Middleware(tracer, func(span go2sky.Span, evt *event.CommandStartedEvent) {
+		span.Tag(go2sky.TagDBStatement, evt.Command.String())
+	}) */
 	// init connect mongodb.
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(dsn).SetMonitor(mongoPlugin.Middleware(tracer)))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(dsn).SetMonitor(middleware))
 	if err != nil {
 		log.Fatalf("connect mongodb error %v \n", err)
 	}

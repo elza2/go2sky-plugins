@@ -13,16 +13,16 @@ The plugins of [go2sky](https://github.com/SkyAPM/go2sky)
 ### Trace Plugins
 
 1. [http server & client](http/README.md)
-2. [gin](gin/README.md)
-3. [gear](gear/README.md)
-4. [go-resty](resty/README.md)
-5. [go-micro](micro/README.md)
-6. [go-restful](go-restful/README.md)
-7. [go-kratos](kratos/README.md)
-8. [sql](sql/README.md)
-9. [dubbo-go](dubbo-go/README.md)
-10. [gorm](gorm/README.md)
-11. [mongodb](mongo/README.md)
+1. [gin](gin/README.md)
+1. [gear](gear/README.md)
+1. [go-resty](resty/README.md)
+1. [go-micro](micro/README.md)
+1. [go-restful](go-restful/README.md)
+1. [go-kratos](kratos/README.md)
+1. [sql](sql/README.md)
+1. [dubbo-go](dubbo-go/README.md)
+1. [gorm](gorm/README.md)
+1. [mongodb](mongo/README.md)
 
 ### Log Plugins
 
