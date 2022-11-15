@@ -114,7 +114,12 @@ func TestCreateCollection(ctx context.Context, client *mongo.Client) error {
 // TestCreate create model.
 func TestCreate(ctx context.Context, client *mongo.Client) error {
 	collection := client.Database(db).Collection("users")
-	_, err := collection.InsertOne(ctx, &User{
+	objectID, err := primitive.ObjectIDFromHex("637334579a3d0cf34c31d08f")
+	if err != nil {
+		return err
+	}
+	_, err = collection.InsertOne(ctx, &User{
+		ID:   objectID,
 		Name: "Elza2",
 		Age:  18,
 	})

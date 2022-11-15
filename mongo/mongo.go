@@ -18,8 +18,8 @@ package mongo
 
 import (
 	"context"
-
 	"github.com/SkyAPM/go2sky"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/event"
 	agentv3 "skywalking.apache.org/repo/goapi/collect/language/agent/v3"
 )
@@ -51,6 +51,7 @@ func Middleware(tracer *go2sky.Tracer, peer string, opts ...Option) *event.Comma
 			span.SetComponent(ComponentMongo)
 			span.SetSpanLayer(agentv3.SpanLayer_Database)
 			span.Tag(go2sky.TagDBType, ComponentMongoDB)
+			span.Tag(go2sky.TagDBStatement, GetMongoDBStatement(evt))
 			for _, opt := range opts {
 				opt(span, evt)
 			}
@@ -73,4 +74,24 @@ func Middleware(tracer *go2sky.Tracer, peer string, opts ...Option) *event.Comma
 // GetOpName get operation name.
 func GetOpName(operation string) string {
 	return "MongoDB/Go2Sky/" + operation
+}
+
+// GetMongoDBStatement get statement.
+func GetMongoDBStatement(evt *event.CommandStartedEvent) string {
+	removeFields := map[string]*struct{}{
+		"lsid":         nil,
+		"$clusterTime": nil,
+		"txnNumber":    nil,
+	}
+	rows := make(bson.RawElement, 0)
+	elements, err := evt.Command.Elements()
+	if err != nil {
+		return ""
+	}
+	for _, element := range elements {
+		if _, ok := removeFields[element.Key()]; !ok {
+			rows = append(rows, element...)
+		}
+	}
+	return rows.String()
 }
