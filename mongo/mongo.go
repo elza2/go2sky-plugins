@@ -51,7 +51,7 @@ func Middleware(tracer *go2sky.Tracer) *event.CommandMonitor {
 			span.SetComponent(ComponentMongo)
 			span.SetSpanLayer(agentv3.SpanLayer_Database)
 			span.Tag(go2sky.TagDBType, ComponentMongoDB)
-			// span.Tag(go2sky.TagDBStatement, evt.Command.String())
+			span.Tag(go2sky.TagDBStatement, evt.Command.String())
 			spanMap[evt.RequestID] = span
 		},
 		Succeeded: func(ctx context.Context, evt *event.CommandSucceededEvent) {
