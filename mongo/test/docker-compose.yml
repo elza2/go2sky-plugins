@@ -25,7 +25,7 @@ services:
       - 12800
 
   mongo:
-    image: 4.2.13
+    image: mongo
     networks:
       - e2e
     expose:
@@ -36,6 +36,11 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "user"
       MONGO_INITDB_ROOT_PASSWORD: "password"
       MONGO_INITDB_DATABASE: "database"
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/27017" ]
+      interval: 5s
+      timeout: 60s
+      retries: 120
 
   client:
     build:

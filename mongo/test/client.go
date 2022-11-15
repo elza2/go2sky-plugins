@@ -28,6 +28,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
 	mongoPlugin "go2sky-plugins/mongo"
 )
 
@@ -41,6 +42,7 @@ const (
 	db      = "database"
 )
 
+// User model.
 type User struct {
 	ID   primitive.ObjectID `bson:"_id,omitempty"`
 	Name string             `bson:"name"`
@@ -80,7 +82,7 @@ func main() {
 
 		for _, test := range tests {
 			log.Printf("excute test case %s", test.name)
-			if err := test.fn(ctx, client); err != nil {
+			if err = test.fn(req.Context(), client); err != nil {
 				log.Fatalf("test case %s failed: %v", test.name, err)
 			}
 		}
@@ -99,10 +101,12 @@ func main() {
 	}
 }
 
+// TestCreateCollection create collection.
 func TestCreateCollection(ctx context.Context, client *mongo.Client) error {
 	return client.Database(db).CreateCollection(ctx, "users")
 }
 
+// TestCreate create model.
 func TestCreate(ctx context.Context, client *mongo.Client) error {
 	collection := client.Database(db).Collection("users")
 	_, err := collection.InsertOne(ctx, &User{
@@ -112,6 +116,7 @@ func TestCreate(ctx context.Context, client *mongo.Client) error {
 	return err
 }
 
+// TestQuery query model.
 func TestQuery(ctx context.Context, client *mongo.Client) error {
 	collection := client.Database(db).Collection("users")
 	var user User
@@ -122,6 +127,7 @@ func TestQuery(ctx context.Context, client *mongo.Client) error {
 	return err
 }
 
+// TestUpdate update model.
 func TestUpdate(ctx context.Context, client *mongo.Client) error {
 	collection := client.Database(db).Collection("users")
 
@@ -129,6 +135,9 @@ func TestUpdate(ctx context.Context, client *mongo.Client) error {
 	err := collection.FindOne(ctx, bson.D{
 		{Key: "name", Value: "Elza2"},
 	}).Decode(&user)
+	if err != nil {
+		return err
+	}
 
 	_, err = collection.UpdateByID(ctx, user.ID, primitive.D{{
 		Key: "$set", Value: primitive.D{
@@ -138,6 +147,7 @@ func TestUpdate(ctx context.Context, client *mongo.Client) error {
 	return err
 }
 
+// TestDelete delete model.
 func TestDelete(ctx context.Context, client *mongo.Client) error {
 	collection := client.Database(db).Collection("users")
 

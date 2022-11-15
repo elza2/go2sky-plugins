@@ -21,20 +21,26 @@ import (
 
 	"github.com/SkyAPM/go2sky"
 	"go.mongodb.org/mongo-driver/event"
-	"skywalking.apache.org/repo/goapi/collect/language/agent/v3"
+	agentv3 "skywalking.apache.org/repo/goapi/collect/language/agent/v3"
 )
 
 const (
-	ComponentMongo   int32  = 42
+	// ComponentMongo ComponentID.
+	ComponentMongo int32 = 42
+
+	// ComponentMongoDB db.type.
 	ComponentMongoDB string = "MongoDB"
-	Peer             string = "mongo:27017"
+
+	// Peer peer.
+	Peer string = "mongo:27017"
 )
 
+// Middleware mongo monitor.
 func Middleware(tracer *go2sky.Tracer) *event.CommandMonitor {
 	spanMap := make(map[int64]go2sky.Span)
 	apmMonitor := &event.CommandMonitor{
 		Started: func(ctx context.Context, evt *event.CommandStartedEvent) {
-			span, ctx, err := tracer.CreateLocalSpan(ctx,
+			span, _, err := tracer.CreateLocalSpan(ctx,
 				go2sky.WithSpanType(go2sky.SpanTypeEntry),
 				go2sky.WithOperationName(GetOpName(evt.CommandName)),
 			)
@@ -43,7 +49,7 @@ func Middleware(tracer *go2sky.Tracer) *event.CommandMonitor {
 			}
 			span.SetPeer(Peer)
 			span.SetComponent(ComponentMongo)
-			span.SetSpanLayer(v3.SpanLayer_Database)
+			span.SetSpanLayer(agentv3.SpanLayer_Database)
 			span.Tag(go2sky.TagDBType, ComponentMongoDB)
 			// span.Tag(go2sky.TagDBStatement, evt.Command.String())
 			spanMap[evt.RequestID] = span
@@ -62,6 +68,7 @@ func Middleware(tracer *go2sky.Tracer) *event.CommandMonitor {
 	return apmMonitor
 }
 
+// GetOpName get operation name.
 func GetOpName(operation string) string {
 	return "MongoDB/Go2Sky/" + operation
 }
