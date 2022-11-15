@@ -40,6 +40,7 @@ const (
 	dsn     = "mongodb://user:password@mongo:27017"
 	addr    = ":8080"
 	db      = "database"
+	peer    = "mongo:27017"
 )
 
 // User model.
@@ -61,8 +62,8 @@ func main() {
 	}
 
 	ctx := context.Background()
-	middleware := mongoPlugin.Middleware(tracer)
-	/* middleware := mongoPlugin.Middleware(tracer, func(span go2sky.Span, evt *event.CommandStartedEvent) {
+	middleware := mongoPlugin.Middleware(tracer, peer)
+	/* middleware := mongoPlugin.Middleware(tracer, func(span go2sky.Span, peer, evt *event.CommandStartedEvent) {
 		span.Tag(go2sky.TagDBStatement, evt.Command.String())
 	}) */
 	// init connect mongodb.

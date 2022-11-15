@@ -30,27 +30,24 @@ const (
 
 	// ComponentMongoDB db.type.
 	ComponentMongoDB string = "MongoDB"
-
-	// Peer peer.
-	Peer string = "mongo:27017"
 )
 
 // Option custom option.
 type Option func(span go2sky.Span, evt *event.CommandStartedEvent)
 
 // Middleware mongo monitor.
-func Middleware(tracer *go2sky.Tracer, opts ...Option) *event.CommandMonitor {
+func Middleware(tracer *go2sky.Tracer, peer string, opts ...Option) *event.CommandMonitor {
 	spanMap := make(map[int64]go2sky.Span)
 	apmMonitor := &event.CommandMonitor{
 		Started: func(ctx context.Context, evt *event.CommandStartedEvent) {
 			span, _, err := tracer.CreateLocalSpan(ctx,
-				go2sky.WithSpanType(go2sky.SpanTypeEntry),
+				go2sky.WithSpanType(go2sky.SpanTypeExit),
 				go2sky.WithOperationName(GetOpName(evt.CommandName)),
 			)
 			if err != nil {
 				return
 			}
-			span.SetPeer(Peer)
+			span.SetPeer(peer)
 			span.SetComponent(ComponentMongo)
 			span.SetSpanLayer(agentv3.SpanLayer_Database)
 			span.Tag(go2sky.TagDBType, ComponentMongoDB)
