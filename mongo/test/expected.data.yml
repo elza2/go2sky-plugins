@@ -31,7 +31,7 @@ segmentItems:
             endTime: {{gt .endTime 0 }}
             componentId: 42
             isError: false
-            spanType: Entry
+            spanType: Exit
             peer: mongo:27017
             skipAnalysis: false
             tags:
@@ -45,7 +45,7 @@ segmentItems:
             endTime: {{gt .endTime 0 }}
             componentId: 42
             isError: false
-            spanType: Entry
+            spanType: Exit
             peer: mongo:27017
             skipAnalysis: false
             tags:
@@ -59,7 +59,7 @@ segmentItems:
             endTime: {{gt .endTime 0 }}
             componentId: 42
             isError: false
-            spanType: Entry
+            spanType: Exit
             peer: mongo:27017
             skipAnalysis: false
             tags:
@@ -73,7 +73,7 @@ segmentItems:
             endTime: {{gt .endTime 0 }}
             componentId: 42
             isError: false
-            spanType: Entry
+            spanType: Exit
             peer: mongo:27017
             skipAnalysis: false
             tags:
@@ -87,7 +87,7 @@ segmentItems:
           endTime: {{gt .endTime 0 }}
           componentId: 42
           isError: false
-          spanType: Entry
+          spanType: Exit
           peer: mongo:27017
           skipAnalysis: false
           tags:
@@ -100,7 +100,7 @@ segmentItems:
           endTime: {{gt .endTime 0 }}
           componentId: 42
           isError: false
-          spanType: Entry
+          spanType: Exit
           peer: mongo:27017
           skipAnalysis: false
           tags:
