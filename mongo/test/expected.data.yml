@@ -38,7 +38,7 @@ segmentItems:
               - key: db.type
                 value: MongoDB
               - key: db.statement
-                value: '{"create":"users","$db":"agni_db"}'
+                value: '{"create":"users","$db":"database"}'
         - operationName: MongoDB/Go2Sky/insert
             parentSpanId: 0
             spanId: 2
@@ -54,7 +54,7 @@ segmentItems:
               - key: db.type
                 value: MongoDB
               - key: db.statement
-                value: '{"insert":"users","ordered":true,"$db":"agni_db","documents":[{"_id":{"$oid":"637334579a3d0cf34c31d08f"},"name":"Elza2","age":{"$numberInt":"18"}}]}'
+                value: '{"insert":"users","ordered":true,"$db":"database","documents":[{"_id":{"$oid":"637334579a3d0cf34c31d08f"},"name":"Elza2","age":{"$numberInt":"18"}}]}'
           - operationName: MongoDB/Go2Sky/find
             parentSpanId: 0
             spanId: 3
@@ -70,7 +70,7 @@ segmentItems:
               - key: db.type
                 value: MongoDB
               - key: db.statement
-                value: '{"find":"users","filter":{"name":"Elza2"},"limit":{"$numberLong":"1"},"singleBatch":true,"$db":"agni_db","$readPreference":{"mode":"primary"}}'
+                value: '{"find":"users","filter":{"name":"Elza2"},"limit":{"$numberLong":"1"},"singleBatch":true,"$db":"database","$readPreference":{"mode":"primary"}}'
           - operationName: MongoDB/Go2Sky/find
             parentSpanId: 0
             spanId: 4
@@ -86,7 +86,7 @@ segmentItems:
               - key: db.type
                 value: MongoDB
               - key: db.statement
-                value: '{"find":"users","filter":{"name":"Elza2"},"limit":{"$numberLong":"1"},"singleBatch":true,"$db":"agni_db","$readPreference":{"mode":"primary"}}'
+                value: '{"find":"users","filter":{"name":"Elza2"},"limit":{"$numberLong":"1"},"singleBatch":true,"$db":"database","$readPreference":{"mode":"primary"}}'
         - operationName: MongoDB/Go2Sky/update
           parentSpanId: 0
           spanId: 5
@@ -102,7 +102,7 @@ segmentItems:
             - key: db.type
               value: MongoDB
             - key: db.statement
-              value: '{"update":"users","ordered":true,"$db":"agni_db","updates":[{"q":{"_id":{"$oid":"637334579a3d0cf34c31d08f"}},"u":{"$set":{"age":{"$numberInt":"22"}}}}]}'
+              value: '{"update":"users","ordered":true,"$db":"database","updates":[{"q":{"_id":{"$oid":"637334579a3d0cf34c31d08f"}},"u":{"$set":{"age":{"$numberInt":"22"}}}}]}'
         - operationName: MongoDB/Go2Sky/delete
           parentSpanId: 0
           spanId: 6
@@ -117,7 +117,7 @@ segmentItems:
             - key: db.type
               value: MongoDB
             - key: db.statement
-              value: '{"delete":"users","ordered":true,"$db":"agni_db","deletes":[{"q":{"name":"Elza2"},"limit":{"$numberInt":"1"}}]}'
+              value: '{"delete":"users","ordered":true,"$db":"database","deletes":[{"q":{"name":"Elza2"},"limit":{"$numberInt":"1"}}]}'
         - operationName: /GET/execute
           parentSpanId: -1
           spanId: 0
